@@ -8,6 +8,7 @@
   --font-md: 18px;
   --font-lg: 24px;
   --font-xl: 36px;
+  --border-radius: 8px;
 }
 
 /* CSS Reset */
@@ -29,6 +30,11 @@
   font-family: inherit;
   font-size: var(--font-md);
   font-weight: bold;
+  transition: filter .2s ease-in-out;
+}
+
+.btn:hover {
+  filter: brightness(150%);
 }
 
 /* Body */
@@ -53,6 +59,32 @@ body {
   font-size: var(--font-xl);
 }
 
+/* grid */
+
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.card {
+  background-color: var(--white);
+  color: var(--red);
+  padding: var(--spacing-md);
+  margin: var(--spacing-md);
+  border-radius: var(--border-radius);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.title {
+  font-size: var(--font-md);
+}
+
+.author {
+  font-style: italic;
+}
+
 /* footer */
 
 footer {
@@ -69,4 +101,10 @@ footer {
 
 .nav-icon-path {
   fill: var(--white);
+}
+
+/* modal */
+
+.modal {
+  display: none;
 }
