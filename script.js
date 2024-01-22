@@ -43,7 +43,13 @@ function createBookCard(book) {
   newPages.innerText = `${book.pages} pages`;
   newIsRead = document.createElement("button");
   newIsRead.classList.add("btn-read", "btn");
-  book.isRead ? (newIsRead.innerText = "read") : (newIsRead.innerText = "unread");
+  if (book.isRead.value) {
+    newIsRead.innerText = "read";
+    newIsRead.classList.add("read");
+  } else {
+    (newIsRead.innerText = "unread");
+    newIsRead.classList.add("unread");
+  }
   newDelete = document.createElement("button");
   newDelete.classList.add("btn-delete","btn");
   newDelete.innerText = "delete";
@@ -57,27 +63,55 @@ function createBookCard(book) {
   bookGrid.appendChild(newCard);
 }
 
+// input
+const titleField = document.getElementById("bookTitle");
+const authorField = document.getElementById("bookAuthor");
+const pagesField = document.getElementById("bookPages");
+const readField = document.getElementById("isReadBox");
+const submitBtn = document.getElementById("submitBtn");
+
+function createBook() {
+  console.log("createBook invoked");
+  const newBook = new Book(titleField.value, authorField.value, pagesField.value, readField.value);
+  addBookToLibrary(newBook);
+  createBookGrid(library);
+}
+
+submitBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  createBook();
+  closeModals();
+});
+
 // modal
 
-addBtn.addEventListener("click", () => {
+function closeModals() {
+  addBookModal.classList.remove('active');
+  overlay.classList.remove('active');
+}
+
+function openModals() {
   addBookModal.classList.add('active');
   overlay.classList.add('active');
+}
+
+addBtn.addEventListener("click", () => {
+  openModals();
 })
 
 overlay.addEventListener("click", (e) => {
   if (!addBookModal.contains(e.target)) {
-    addBookModal.classList.remove('active');
-    overlay.classList.remove('active');
+    closeModals();
   }
 })
 
 // tests
 
-const theHobbit = new Book("The Hobbit", "J.R.R. Tolkien", 295, true);
-const hitchhikersGuide = new Book("The Hitchhiker's Guide to the Galaxy", "Douglas Adams", 183, true);
+// const theHobbit = new Book("The Hobbit", "J.R.R. Tolkien", 295, true);
+// const hitchhikersGuide = new Book("The Hitchhiker's Guide to the Galaxy", "Douglas Adams", 183, true);
 
-addBookToLibrary(theHobbit);
-console.log(library);
-addBookToLibrary(hitchhikersGuide);
-console.log(library);
-createBookGrid(library);
+// addBookToLibrary(theHobbit);
+// console.log(library);
+// addBookToLibrary(hitchhikersGuide);
+// console.log(library);
+// createBookGrid(library);
