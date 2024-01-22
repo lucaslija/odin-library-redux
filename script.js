@@ -13,6 +13,9 @@ function addBookToLibrary(book) {
 
 // DOM elements
 const bookGrid = document.getElementById("bookGrid");
+const addBtn = document.getElementById("addBtn");
+const addBookModal = document.getElementById("addBookModal");
+const overlay = document.getElementById("overlay");
 
 function createBookGrid(library) {
   resetGrid();
@@ -53,6 +56,22 @@ function createBookCard(book) {
 
   bookGrid.appendChild(newCard);
 }
+
+// modal
+
+addBtn.addEventListener("click", () => {
+  addBookModal.classList.add('active');
+  overlay.classList.add('active');
+})
+
+overlay.addEventListener("click", (e) => {
+  if (!addBookModal.contains(e.target)) {
+    addBookModal.classList.remove('active');
+    overlay.classList.remove('active');
+  }
+})
+
+// tests
 
 const theHobbit = new Book("The Hobbit", "J.R.R. Tolkien", 295, true);
 const hitchhikersGuide = new Book("The Hitchhiker's Guide to the Galaxy", "Douglas Adams", 183, true);
