@@ -64,6 +64,7 @@ function createBookCard(book) {
 }
 
 // input
+const addBookForm = document.getElementById("addBookForm");
 const titleField = document.getElementById("bookTitle");
 const authorField = document.getElementById("bookAuthor");
 const pagesField = document.getElementById("bookPages");
@@ -81,6 +82,7 @@ submitBtn.addEventListener("click", (e) => {
   e.preventDefault();
   createBook();
   closeModals();
+  addBookForm.reset();
 });
 
 // modal
