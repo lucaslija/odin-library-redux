@@ -2,7 +2,7 @@ function Book(title, author, pages, isRead) {
   this.title = title;
   this.author = author;
   this.pages = pages;
-  this.isRead = isRead; 
+  this.isRead = isRead;
 }
 
 const library = [];
@@ -25,7 +25,7 @@ function createBookGrid(library) {
 }
 
 function resetGrid() {
-  bookGrid.innerHTML = '';
+  bookGrid.innerHTML = "";
 }
 
 function createBookCard(book) {
@@ -43,15 +43,16 @@ function createBookCard(book) {
   newPages.innerText = `${book.pages} pages`;
   newIsRead = document.createElement("button");
   newIsRead.classList.add("btn-read", "btn");
-  if (book.isRead.value) {
+  console.log(book.isRead);
+  if (book.isRead) {
     newIsRead.innerText = "read";
     newIsRead.classList.add("read");
   } else {
-    (newIsRead.innerText = "unread");
+    newIsRead.innerText = "unread";
     newIsRead.classList.add("unread");
   }
   newDelete = document.createElement("button");
-  newDelete.classList.add("btn-delete","btn");
+  newDelete.classList.add("btn-delete", "btn");
   newDelete.innerText = "delete";
 
   newCard.appendChild(newTitle);
@@ -73,7 +74,13 @@ const submitBtn = document.getElementById("submitBtn");
 
 function createBook() {
   console.log("createBook invoked");
-  const newBook = new Book(titleField.value, authorField.value, pagesField.value, readField.value);
+  console.log(readField.checked);
+  const newBook = new Book(
+    titleField.value,
+    authorField.value,
+    pagesField.value,
+    readField.checked
+  );
   addBookToLibrary(newBook);
   createBookGrid(library);
 }
@@ -88,24 +95,24 @@ submitBtn.addEventListener("click", (e) => {
 // modal
 
 function closeModals() {
-  addBookModal.classList.remove('active');
-  overlay.classList.remove('active');
+  addBookModal.classList.remove("active");
+  overlay.classList.remove("active");
 }
 
 function openModals() {
-  addBookModal.classList.add('active');
-  overlay.classList.add('active');
+  addBookModal.classList.add("active");
+  overlay.classList.add("active");
 }
 
 addBtn.addEventListener("click", () => {
   openModals();
-})
+});
 
 overlay.addEventListener("click", (e) => {
   if (!addBookModal.contains(e.target)) {
     closeModals();
   }
-})
+});
 
 // tests
 
