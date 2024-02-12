@@ -51,8 +51,10 @@ function createBookCard(book) {
     newIsRead.innerText = "unread";
     newIsRead.classList.add("unread");
   }
+  buttonNo = library.length - 1;
   newDelete = document.createElement("button");
   newDelete.classList.add("btn-delete", "btn");
+  newDelete.setAttribute('id', `delete-${buttonNo}`);
   newDelete.innerText = "delete";
 
   newCard.appendChild(newTitle);
