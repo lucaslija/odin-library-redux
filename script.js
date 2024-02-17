@@ -5,14 +5,14 @@ function Book(title, author, pages, isRead) {
   this.isRead = isRead;
 }
 
-const library = [];
+let library = [];
 
 function addBookToLibrary(book) {
   library.push(book);
 }
 
 function removeBookFromLibrary(title) {
-  console.log(library.filter((book) => book.title !== title));
+  library = library.filter((book) => book.title !== title);
 }
 
 // DOM elements
@@ -29,7 +29,6 @@ function createBookGrid(library) {
   }
   // generate nodelist for delete buttons
   deleteBtns = document.querySelectorAll(".btn-delete");
-  console.log(deleteBtns);
   deleteBtns.forEach((button) => {
     button.addEventListener("click", function(e) {
       console.log("delete pressed");
@@ -58,7 +57,6 @@ function createBookCard(book) {
   newPages.innerText = `${book.pages} pages`;
   newIsRead = document.createElement("button");
   newIsRead.classList.add("btn-read", "btn");
-  console.log(book.isRead);
   if (book.isRead) {
     newIsRead.innerText = "read";
     newIsRead.classList.add("read");
@@ -88,8 +86,6 @@ const readField = document.getElementById("isReadBox");
 const submitBtn = document.getElementById("submitBtn");
 
 function createBook() {
-  console.log("createBook invoked");
-  console.log(readField.checked);
   const newBook = new Book(
     titleField.value,
     authorField.value,
@@ -109,7 +105,6 @@ submitBtn.addEventListener("click", (e) => {
 
 function deleteBook(button) {
   let bookIndex = button.parentElement.dataset.index;
-  console.log("Index: " + bookIndex);
   removeBookFromLibrary(library[bookIndex].title);
   createBookGrid(library);
 }
