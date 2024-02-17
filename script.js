@@ -20,21 +20,13 @@ const bookGrid = document.getElementById("bookGrid");
 const addBtn = document.getElementById("addBtn");
 const addBookModal = document.getElementById("addBookModal");
 const overlay = document.getElementById("overlay");
-let deleteBtns = [];
 
 function createBookGrid(library) {
   resetGrid();
   for (const book of library) {
     createBookCard(book);
   }
-  // generate nodelist for delete buttons
-  deleteBtns = document.querySelectorAll(".btn-delete");
-  deleteBtns.forEach((button) => {
-    button.addEventListener("click", function(e) {
-      console.log("delete pressed");
-      deleteBook(button);
-    })
-  })
+  setBtns();
 }
 
 function resetGrid() {
@@ -77,6 +69,20 @@ function createBookCard(book) {
   bookGrid.appendChild(newCard);
 }
 
+function setBtns() {
+  // delete buttons
+  let deleteBtns = document.querySelectorAll(".btn-delete");
+  deleteBtns.forEach((button) => {
+    button.addEventListener("click", (e) => deleteBook(button))
+    })
+  
+  // unread buttons
+  let readBtns = document.querySelectorAll(".btn-read");
+  readBtns.forEach((button) => {
+    button.addEventListener("click", (e) => toggleRead(button));
+  })
+}
+
 // input
 const addBookForm = document.getElementById("addBookForm");
 const titleField = document.getElementById("bookTitle");
@@ -107,6 +113,18 @@ function deleteBook(button) {
   let bookIndex = button.parentElement.dataset.index;
   removeBookFromLibrary(library[bookIndex].title);
   createBookGrid(library);
+}
+
+function toggleRead(button) {
+  if (button.classList.contains("unread")) {
+    button.classList.remove("unread");
+    button.classList.add("read");
+    button.innerText = "read";
+  } else if (button.classList.contains("read")) {
+    button.classList.remove("read");
+    button.classList.add("unread");
+    button.innerText = "unread";
+  }
 }
 
 // modal
