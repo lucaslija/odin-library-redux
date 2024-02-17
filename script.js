@@ -11,17 +11,31 @@ function addBookToLibrary(book) {
   library.push(book);
 }
 
+function removeBookFromLibrary(title) {
+  console.log(library.filter((book) => book.title !== title));
+}
+
 // DOM elements
 const bookGrid = document.getElementById("bookGrid");
 const addBtn = document.getElementById("addBtn");
 const addBookModal = document.getElementById("addBookModal");
 const overlay = document.getElementById("overlay");
+let deleteBtns = [];
 
 function createBookGrid(library) {
   resetGrid();
   for (const book of library) {
     createBookCard(book);
   }
+  // generate nodelist for delete buttons
+  deleteBtns = document.querySelectorAll(".btn-delete");
+  console.log(deleteBtns);
+  deleteBtns.forEach((button) => {
+    button.addEventListener("click", function(e) {
+      console.log("delete pressed");
+      deleteBook(button);
+    })
+  })
 }
 
 function resetGrid() {
@@ -31,6 +45,7 @@ function resetGrid() {
 function createBookCard(book) {
   newCard = document.createElement("div");
   newCard.classList.add("card");
+  newCard.setAttribute('data-index', library.indexOf(book));
 
   newTitle = document.createElement("p");
   newTitle.classList.add("title");
@@ -51,10 +66,8 @@ function createBookCard(book) {
     newIsRead.innerText = "unread";
     newIsRead.classList.add("unread");
   }
-  buttonNo = library.length - 1;
   newDelete = document.createElement("button");
   newDelete.classList.add("btn-delete", "btn");
-  newDelete.setAttribute('id', `delete-${buttonNo}`);
   newDelete.innerText = "delete";
 
   newCard.appendChild(newTitle);
@@ -93,6 +106,13 @@ submitBtn.addEventListener("click", (e) => {
   closeModals();
   addBookForm.reset();
 });
+
+function deleteBook(button) {
+  let bookIndex = button.parentElement.dataset.index;
+  console.log("Index: " + bookIndex);
+  removeBookFromLibrary(library[bookIndex].title);
+  createBookGrid(library);
+}
 
 // modal
 
